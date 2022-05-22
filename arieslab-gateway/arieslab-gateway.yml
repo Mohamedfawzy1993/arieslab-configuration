@@ -32,4 +32,4 @@ resilience4j:
   timelimiter:
     instances:
       defaultCircuitBreaker:
-        timeoutDuration: 200
+        timeoutDuration: 1200
