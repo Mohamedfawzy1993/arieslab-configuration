@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: arieslab-gateway
+  cloud:
+    config:
+      uri: http://ARIESLAB-CONFIGURATION:9296
+    gateway:
+      routes:
+        - id: ARIESLAB-USER-SERVICE
+          uri: lb://ARIESLAB-USER-SERVICE
+          predicates:
+            - Path=/arieslab-user-service/**
+          filters:
+            - RewritePath=/arieslab-user-service/(?<segment>.*),/$\{segment}
+            - name: CircuitBreaker
+              args:
+                name: defaultCircuitBreaker
+                fallbackUri: forward:/fallback/userServiceFallbackMethod
+        - id: ARIESLAB-DEPARTMENT-SERVICE
+          uri: lb://ARIESLAB-DEPARTMENT-SERVICE
+          predicates:
+            - Path=/arieslab-department-service/**
+          filters:
+            - RewritePath=/arieslab-department-service/(?<segment>.*),/$\{segment}
+            - name: CircuitBreaker
+              args:
+                name: defaultCircuitBreaker
+                fallbackUri: forward:/fallback/departmentServiceFallbackMethod
+resilience4j:
+  circuitbreaker:
+    instances:
+      defaultCircuitBreaker:
+        registerHealthIndicator: true
+  timelimiter:
+    instances:
+      defaultCircuitBreaker:
+        timeoutDuration: 200
