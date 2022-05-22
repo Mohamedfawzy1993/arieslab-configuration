@@ -33,3 +33,7 @@ resilience4j:
     instances:
       defaultCircuitBreaker:
         timeoutDuration: 1200
+management:
+  endpoint:
+    refresh:
+      enabled: true
