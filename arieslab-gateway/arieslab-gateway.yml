@@ -35,5 +35,10 @@ resilience4j:
         timeoutDuration: 1200
 management:
   endpoint:
-    refresh:
-      enabled: true
+    health:
+      show-details: always
+  endpoints:
+    web:
+      base-path: /_admin
+      exposure:
+        include: ["info", "health", "loggers", "metrics", "prometheus", "caches", "refresh"]
