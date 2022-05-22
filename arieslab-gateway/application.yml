@@ -2,8 +2,6 @@ spring:
   application:
     name: arieslab-gateway
   cloud:
-    config:
-      uri: http://ARIESLAB-CONFIGURATION:9296
     gateway:
       routes:
         - id: ARIESLAB-USER-SERVICE
